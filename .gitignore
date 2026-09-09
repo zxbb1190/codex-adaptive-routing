@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.codex/*.local.toml
+.codex/**/secrets*
+.venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
