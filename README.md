@@ -3,7 +3,7 @@
 Reusable project-scoped Codex configuration for adaptive multi-agent software
 development.
 
-The root agent uses Sol Medium as the coordinator and decides whether a task is
+The root agent uses Astra Low as the coordinator and decides whether a task is
 better handled directly or delegated. The configuration provides specialized
 roles for low-cost exploration, routine implementation, complex implementation,
 review, architecture planning, and last-resort arbitration.
@@ -40,7 +40,7 @@ The default configuration uses the following model family:
 
 | Role | Model | Reasoning |
 | --- | --- | --- |
-| Root coordinator | `gpt-5.6-sol` | `medium` |
+| Root coordinator | `gpt-6-astra` | `low` |
 | Default worker | `gpt-5.6-terra` | `medium` |
 | Low-cost roles | `gpt-5.6-luna` | `low` |
 | Architecture roles | `gpt-6-astra` | `medium` / `high` |
