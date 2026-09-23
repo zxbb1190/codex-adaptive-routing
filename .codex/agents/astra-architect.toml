@@ -21,8 +21,7 @@ implementation constraints, recommended worker, recommended reasoning effort,
 and validation criteria.
 
 Worker recommendations:
-- luna_worker for mechanical, explicit, low-risk work
-- terra_worker for normal implementation
+- luna_worker for bounded ordinary implementation and mechanical work
 - sol_worker for complex implementation
 
 Do not perform routine refactors, ordinary CRUD, formatting, lint fixes, or

@@ -11,7 +11,7 @@ review, architecture planning, and last-resort arbitration.
 ## Contents
 
 - `.codex/config.toml`: project defaults and a concurrency ceiling of 3.
-- `.codex/agents/`: seven custom roles with explicit model and reasoning settings.
+- `.codex/agents/`: six custom roles with explicit model and reasoning settings.
 - `AGENTS.md`: model-independent routing and delegation policy.
 
 ## Use In A Project
@@ -41,12 +41,35 @@ The default configuration uses the following model family:
 | Role | Model | Reasoning |
 | --- | --- | --- |
 | Root coordinator | `gpt-6-astra` | `low` |
-| Default worker | `gpt-5.6-terra` | `medium` |
-| Low-cost roles | `gpt-5.6-luna` | `low` |
-| Architecture roles | `gpt-6-astra` | `medium` / `high` |
-| Review role | `gpt-5.6-sol` | `high` |
+| `luna_scanner` (read-only discovery) | `gpt-6-luna` | `low` |
+| `luna_worker` (default implementation) | `gpt-6-luna` | `medium` |
+| `sol_worker` (complex implementation) | `gpt-6-sol` | `medium` |
+| `sol_reviewer` (read-only review) | `gpt-6-sol` | `high` |
+| `astra_architect` (read-only planning) | `gpt-6-astra` | `medium` |
+| `astra_arbiter` (read-only arbitration) | `gpt-6-astra` | `high` |
+
+These are three models and six subagent roles, plus the root coordinator.
+Unnamed subagents default to GPT-6 Luna medium. Luna handles bounded ordinary
+features, UI, API integration, CRUD, tests, and small refactors. Sol handles
+complex state, concurrency, performance, migrations, and difficult debugging.
+The root may route directly to the appropriate specialist; Luna -> Sol -> Astra
+is not a required sequence. Review and architecture work are used selectively.
+
+The model family is described in the [official model guidance](https://developers.openai.com/api/docs/guides/latest-model).
+The role boundaries and concurrency ceiling here are project policy.
 
 Verify that these model IDs are available to your Codex account before use.
+
+## Upgrade From The Previous Configuration
+
+Replace the routing template files and merge `AGENTS.md` with your project's
+engineering rules. Remove the old `.codex/agents/terra-worker.toml` from the
+target project: copying new files alone does not remove it. Update project-local
+references to `terra_worker` or `ESCALATE_TERRA` to the new Luna implementation
+role or Sol escalation, as appropriate.
+
+Start a new Codex task after upgrading so it can load the new project settings
+and role definitions. Existing tasks may retain their loaded configuration.
 
 ## Verification
 

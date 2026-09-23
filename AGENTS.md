@@ -1,74 +1,43 @@
 # Adaptive Multi-Agent Routing Policy
 
-This repository contains a reusable Codex orchestration policy. These rules
-are project guidance for the root agent; they do not require every task to use
-subagents.
-
 ## Coordinator
 
-The root agent is the coordinator and owns the final result. It is explicitly
-authorized to proactively delegate to configured subagents when delegation is
-likely to improve quality, reduce expensive reasoning, reduce root-context
-consumption, or enable useful parallel work. The root agent decides whether to
-delegate, which role to use, whether to run work in parallel, and whether an
-independent review is worth its cost. It does not wait for the user to name a
-subagent.
+The root owns requirements, routing, integration, validation, and the final
+result. It may proactively delegate when quality, cost, context savings, or
+elapsed time justify coordination overhead. No user request to name a subagent
+is required. Complete trivial work and tightly coupled steps directly.
 
-This is adaptive authorization, not mandatory fan-out. The root agent should
-complete trivial work directly when delegation overhead would exceed the value.
+## Routing and Escalation
 
-## Decision Rules
+Choose the lowest-cost capable role using `.codex/agents/*.toml` descriptions
+and boundaries. Default bounded implementation to `luna_worker`; select
+`sol_worker` directly when complexity warrants it. Use `luna_scanner` for
+read-only discovery. Detailed responsibilities belong in the role files.
 
-Before substantial work, evaluate:
+Luna -> Sol -> Astra specialist is an escalation option, not a required chain.
+Route genuine architecture decisions directly to `astra_architect`. Reserve
+`astra_arbiter` for consequential unresolved issues after strong workers fail
+or their evidence conflicts. Pass existing evidence rather than restarting
+exploration. Do not repeatedly retry an insufficient role.
 
-1. Can the root agent complete the task cheaply and reliably?
-2. Can a cheaper worker complete a bounded part reliably?
-3. Are there genuinely independent parts worth parallelizing?
-4. Would delegation reduce root-context usage or improve specialist reasoning?
-5. Is independent review worth its additional token cost?
+Select model capability and reasoning effort independently. Use configured role
+defaults; do not automatically increase effort to xhigh, max, or ultra. Prefer
+a more capable worker when the current role cannot handle the task.
 
-Do not create subagents merely because they exist. Avoid delegation for tiny
-edits, obvious fixes, simple questions about already-read code, or work that
-requires continuous context from the root thread.
+## Parallelism and Review
 
-Consider delegation for broad exploration, independent subtasks, well-specified
-implementation, difficult reasoning, consequential review, or work that can be
-done reliably by a lower-cost worker.
+Delegate concrete, bounded tasks. Parallel work needs independent scopes, clear
+file or module ownership, known dependencies, and a material benefit. Concurrency
+is a ceiling, not a target; prefer one or two useful workers over filling every
+slot. Tell workers they share the codebase and must preserve others' changes.
 
-## Role Selection
+Use `sol_reviewer` when independent review is worth its cost, especially for
+security, concurrency, migrations, core architecture, or cross-module state.
+Routine CSS and straightforward CRUD usually need only proportionate validation.
+Review is not a mandatory stage for every task.
 
-Choose the lowest-cost capable role:
+## Completion
 
-- `luna_scanner`: read-only file, symbol, route, test, usage, and pattern discovery.
-- `luna_worker`: mechanical edits, types, lint, formatting, simple tests, and small isolated changes.
-- `terra_worker`: default implementation for ordinary features, API integration, UI, CRUD, and routine bugs.
-- `sol_worker`: complex implementation, cross-module state, performance, concurrency, migrations, and difficult debugging.
-- `sol_reviewer`: independent review for consequential changes, subtle correctness, security, concurrency, and regressions.
-- `astra_architect`: selective planning for genuine architecture decisions, new subsystems, major contracts, data models, or major refactors.
-- `astra_arbiter`: last-resort escalation when strong workers fail or major architectural uncertainty remains.
-
-## Reasoning Effort
-
-Model capability and reasoning effort are independent decisions.
-
-- `low`: bounded and deterministic work.
-- `medium`: ordinary planning and implementation.
-- `high`: difficult debugging, subtle correctness, and consequential review.
-
-Do not automatically use `xhigh`, `max`, or `ultra`. Prefer upgrading model
-capability before repeatedly increasing reasoning effort.
-
-Default escalation is Luna -> Terra -> Sol. Escalate to Astra only when the
-unresolved problem is architectural. Do not repeatedly retry an insufficient
-role.
-
-## Parallelism and Completion
-
-The configured concurrency is a ceiling, not a target. Run parallel work only
-when tasks are independent, ownership is clear, dependencies are known, and
-elapsed time or quality will materially improve. Prefer one or two useful
-workers over filling every slot.
-
-Workers must report files changed, behavior changed, validation, and remaining
-risk. The root agent integrates results, resolves conflicts, runs proportionate
-validation, decides whether review is needed, and returns one coherent result.
+Workers report files changed, behavior changed, validation results, remaining
+risks, and escalation evidence. The root integrates their work, resolves
+conflicts, runs proportionate validation, and returns one coherent result.
