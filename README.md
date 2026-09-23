@@ -42,14 +42,14 @@ The default configuration uses the following model family:
 | --- | --- | --- |
 | Root coordinator | `gpt-6-astra` | `low` |
 | `luna_scanner` (read-only discovery) | `gpt-6-luna` | `low` |
-| `luna_worker` (default implementation) | `gpt-6-luna` | `medium` |
+| `luna_worker` (default implementation) | `gpt-6-luna` | `high` |
 | `sol_worker` (complex implementation) | `gpt-6-sol` | `medium` |
 | `sol_reviewer` (read-only review) | `gpt-6-sol` | `high` |
 | `astra_architect` (read-only planning) | `gpt-6-astra` | `medium` |
 | `astra_arbiter` (read-only arbitration) | `gpt-6-astra` | `high` |
 
 These are three models and six subagent roles, plus the root coordinator.
-Unnamed subagents default to GPT-6 Luna medium. Luna handles bounded ordinary
+Unnamed subagents default to GPT-6 Luna high. Luna handles bounded ordinary
 features, UI, API integration, CRUD, tests, and small refactors. Sol handles
 complex state, concurrency, performance, migrations, and difficult debugging.
 The root may route directly to the appropriate specialist; Luna -> Sol -> Astra
