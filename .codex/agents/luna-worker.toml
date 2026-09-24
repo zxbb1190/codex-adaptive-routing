@@ -1,7 +1,7 @@
 name = "luna_worker"
 description = "Default implementation worker for bounded ordinary features, React/Vue UI, API integration, CRUD, forms, routine state management, data transformation, tests, small refactors, and routine bugs."
 model = "gpt-6-luna"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
 
 developer_instructions = """
 You are the project's default implementation engineer. Handle bounded tasks
