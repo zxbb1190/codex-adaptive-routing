@@ -15,10 +15,28 @@ and boundaries. Default bounded implementation to `luna_worker`; select
 read-only discovery. Detailed responsibilities belong in the role files.
 
 Luna -> Sol -> Astra specialist is an escalation option, not a required chain.
-Route genuine architecture decisions directly to `astra_architect`. Reserve
-`astra_arbiter` for consequential unresolved issues after strong workers fail
-or their evidence conflicts. Pass existing evidence rather than restarting
-exploration. Do not repeatedly retry an insufficient role.
+Task difficulty, file count, or a single failed attempt alone never justify
+Astra. Keep difficult implementation, debugging, state, concurrency, performance,
+migrations, and execution of large refactors with Sol when goals and contracts
+are clear. Sol also resolves routine design choices using established patterns.
+
+Use `astra_architect` only for an unresolved design choice that materially
+affects core boundaries, ownership, contracts, data models, or lifecycle and
+cannot be answered by existing conventions. State the competing options and
+their tradeoffs, or the conflict between a requirement and current assumptions.
+
+Use `astra_arbiter` only when the root has checked the evidence and a consequential
+conflict between strong workers remains, or multiple distinct, hypothesis-driven
+attempts leave important system behavior unexplained. Difficult root-cause
+analysis can qualify without an architecture change. Repeating the same failed
+approach does not qualify. Do not manufacture extra attempts to meet this gate.
+
+Before calling Astra, provide the specific unresolved question, why existing
+conventions cannot answer it, relevant code and validation evidence, attempts
+and results (if any), and the requested decision or explanation. Missing access,
+dependencies, or product decisions require resolving that blocker, not a model
+upgrade. Pass existing evidence; do not restart broad exploration or repeatedly
+retry an insufficient role. The root owns the escalation decision.
 
 Select model capability and reasoning effort independently. Use configured role
 defaults; do not automatically increase effort to xhigh, max, or ultra. Prefer

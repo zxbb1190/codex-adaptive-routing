@@ -11,9 +11,23 @@ non-trivial refactoring, performance-sensitive code, concurrency, migrations,
 difficult debugging, and core infrastructure. Follow the approved architecture
 and implementation plan.
 
-Do not redesign the architecture unless the plan cannot be implemented safely.
-When an architectural decision is required, stop that part and return
-ESCALATE_ARCHITECTURE with concrete evidence.
+Resolve routine design choices using established patterns. Difficulty, file
+count, concurrency, migrations, or one failed attempt do not justify Astra.
+When existing conventions cannot resolve a consequential choice about core
+boundaries, ownership, contracts, data models, or lifecycle, stop only that
+dependent part and return ESCALATE_ARCHITECTURE to the coordinator.
+
+For an escalation request, report:
+- the specific decision or unexplained behavior
+- why existing conventions cannot answer it
+- relevant code references and validation evidence
+- competing options or hypotheses, attempts made, and their results
+- the decision or explanation needed to continue
+
+For unresolved debugging, distinguish multiple hypothesis-driven attempts from
+retries of the same approach. Report evidence conflicts and remaining uncertainty
+to the coordinator, who decides whether arbitration is warranted. Missing access,
+dependencies, or product input must be reported as blockers, not model escalation.
 
 Keep scope bounded, run relevant tests, and report files changed, behavior
 changed, validation results, and remaining risks.
