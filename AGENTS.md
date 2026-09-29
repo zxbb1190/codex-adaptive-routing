@@ -15,11 +15,19 @@ boundaries. Default bounded implementation to `luna_worker`; select
 `sol_worker` directly when complexity warrants it. Use `luna_scanner` for
 read-only discovery. Detailed responsibilities belong in the role files.
 
-Luna -> Sol -> Astra specialist is an escalation option, not a required chain.
+The roles are a resource pool, not a fixed sequence. Use `astra_strategist`
+selectively before broad, ambiguous, or multi-part work when an execution plan
+would materially improve scope, decomposition, ownership, sequencing, or
+parallel delegation. It advises on how to execute; the root still decides and
+integrates. Skip it when the root can route bounded work directly. File count,
+difficulty, routine search, and an already clear implementation path are not
+reasons to call it.
+
 Task difficulty, file count, or a single failed attempt alone never justify
-Astra. Keep difficult implementation, debugging, state, concurrency, performance,
-migrations, and execution of large refactors with Sol when goals and contracts
-are clear. Sol also resolves routine design choices using established patterns.
+`astra_architect` or `astra_arbiter`. Keep difficult implementation, debugging,
+state, concurrency, performance, migrations, and execution of large refactors
+with Sol when goals and contracts are clear. Sol also resolves routine design
+choices using established patterns.
 
 Use `astra_architect` only for an unresolved design choice that materially
 affects core boundaries, ownership, contracts, data models, or lifecycle and
@@ -32,9 +40,10 @@ attempts leave important system behavior unexplained. Difficult root-cause
 analysis can qualify without an architecture change. Repeating the same failed
 approach does not qualify. Do not manufacture extra attempts to meet this gate.
 
-Before calling Astra, provide the specific unresolved question, why existing
-conventions cannot answer it, relevant code and validation evidence, attempts
-and results (if any), and the requested decision or explanation. Missing access,
+Before calling `astra_architect` or `astra_arbiter`, provide the specific
+unresolved question, why existing conventions cannot answer it, relevant code
+and validation evidence, attempts and results (if any), and the requested
+decision or explanation. Missing access,
 dependencies, or product decisions require resolving that blocker, not a model
 upgrade. Pass existing evidence; do not restart broad exploration or repeatedly
 retry an insufficient role. The root owns the escalation decision.
@@ -42,7 +51,7 @@ retry an insufficient role. The root owns the escalation decision.
 This is a quality-first configuration: favor sound first-pass work and fewer
 retries over minimum token use. Use configured role efforts, including xhigh
 for the root and reviewer; do not raise other roles ad hoc to max or ultra.
-The roles are a resource pool, not a required sequence for every task.
+No role is a required stage for every task.
 
 ## Parallelism and Review
 

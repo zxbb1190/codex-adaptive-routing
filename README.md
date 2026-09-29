@@ -7,12 +7,12 @@ The root agent uses GPT-6 Sol xhigh as the coordinator and decides whether a tas
 is better handled directly or delegated. This quality-first configuration favors
 strong routing judgement, first-pass quality, and thorough selective review.
 It provides specialized roles for discovery, ordinary implementation, complex
-implementation, review, architecture planning, and last-resort arbitration.
+implementation, review, strategic planning, architecture, and arbitration.
 
 ## Contents
 
 - `.codex/config.toml`: project defaults and a concurrency ceiling of 3.
-- `.codex/agents/`: six custom roles with explicit model and reasoning settings.
+- `.codex/agents/`: seven custom roles with explicit model and reasoning settings.
 - `AGENTS.md`: routing, delegation, and escalation policy.
 
 ## Use In A Project
@@ -47,21 +47,26 @@ The default configuration uses the following model family:
 | `luna_worker` (default implementation) | `gpt-6-luna` | `high` |
 | `sol_worker` (complex implementation) | `gpt-6-sol` | `high` |
 | `sol_reviewer` (read-only review) | `gpt-6-sol` | `xhigh` |
-| `astra_architect` (read-only planning) | `gpt-6-astra` | `medium` |
+| `astra_strategist` (read-only planning) | `gpt-6-astra` | `low` |
+| `astra_architect` (read-only design) | `gpt-6-astra` | `medium` |
 | `astra_arbiter` (read-only arbitration) | `gpt-6-astra` | `high` |
 
-These are three models and six subagent roles, plus the root coordinator.
+These are three models and seven subagent roles, plus the root coordinator.
 Unnamed subagents default to GPT-6 Luna high. Luna handles bounded ordinary
 features, UI, API integration, CRUD, tests, and small refactors. Sol handles
 complex state, concurrency, performance, migrations, and difficult debugging.
-The root may route directly to the appropriate specialist; Luna -> Sol -> Astra
-is not a required sequence. Review and architecture work are used selectively.
+The root may route directly to the appropriate specialist. No role sequence is
+required; review and planning are used selectively.
 
-Luna handles bounded and ordinary execution. Sol handles primary coding,
-reasoning, and coordination. Astra is reserved for genuine architecture
-decisions and last-resort arbitration. Review is selective, not a required
-step after every worker task; ordinary CSS, copy, and simple CRUD usually need
-only proportionate validation. The concurrency limit of 3 is a ceiling.
+Luna handles bounded execution and discovery. Sol handles primary coding,
+reasoning, coordination, and review. Astra supports strategic planning,
+architecture decisions, and final arbitration. `astra_strategist` may help
+frame and split broad, ambiguous, or multi-part work before implementation;
+it recommends ownership, order, and workers without replacing the root or
+writing code. `astra_architect` resolves consequential system design choices;
+`astra_arbiter` weighs unresolved conflicting evidence. Strategist is optional
+and does not serve as an Architect. Ordinary CSS, copy, and simple CRUD usually
+need only proportionate validation. The concurrency limit of 3 is a ceiling.
 
 The model family is described in the [official model guidance](https://developers.openai.com/api/docs/guides/latest-model).
 The role boundaries and concurrency ceiling here are project policy.
@@ -73,7 +78,7 @@ Verify that these model IDs are available to your Codex account before use.
 Replace the routing template files and merge `AGENTS.md` with your project's
 engineering rules. Remove obsolete role files from the target project: copying
 new files alone does not remove files that were previously installed. Check
-project-local escalation references against the six current role names.
+project-local escalation references against the seven current role names.
 
 Start a new Codex task after upgrading so it can load the new project settings
 and role definitions. Existing tasks may retain their loaded configuration.
