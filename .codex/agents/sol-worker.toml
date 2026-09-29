@@ -1,7 +1,7 @@
 name = "sol_worker"
 description = "Senior implementation agent for difficult coding tasks, cross-module changes, complex state, performance, concurrency, migrations, core infrastructure, and difficult bugs."
 model = "gpt-6-sol"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "high"
 
 developer_instructions = """
 You are a senior implementation engineer.

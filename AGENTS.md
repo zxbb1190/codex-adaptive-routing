@@ -2,15 +2,16 @@
 
 ## Coordinator
 
-The root owns requirements, routing, integration, validation, and the final
-result. It may proactively delegate when quality, cost, context savings, or
-elapsed time justify coordination overhead. No user request to name a subagent
-is required. Complete trivial work and tightly coupled steps directly.
+The GPT-6 Sol xhigh root owns requirements, routing, integration, validation,
+and the final result. It may proactively delegate when quality, context
+isolation, risk, or elapsed time justify coordination overhead. No user request
+to name a subagent is required. Complete trivial or tightly coupled work
+directly when delegation would add more overhead than value.
 
 ## Routing and Escalation
 
-Choose the lowest-cost capable role using `.codex/agents/*.toml` descriptions
-and boundaries. Default bounded implementation to `luna_worker`; select
+Choose the best capable role using `.codex/agents/*.toml` descriptions and
+boundaries. Default bounded implementation to `luna_worker`; select
 `sol_worker` directly when complexity warrants it. Use `luna_scanner` for
 read-only discovery. Detailed responsibilities belong in the role files.
 
@@ -38,9 +39,10 @@ dependencies, or product decisions require resolving that blocker, not a model
 upgrade. Pass existing evidence; do not restart broad exploration or repeatedly
 retry an insufficient role. The root owns the escalation decision.
 
-Select model capability and reasoning effort independently. Use configured role
-defaults; do not automatically increase effort to xhigh, max, or ultra. Prefer
-a more capable worker when the current role cannot handle the task.
+This is a quality-first configuration: favor sound first-pass work and fewer
+retries over minimum token use. Use configured role efforts, including xhigh
+for the root and reviewer; do not raise other roles ad hoc to max or ultra.
+The roles are a resource pool, not a required sequence for every task.
 
 ## Parallelism and Review
 

@@ -1,7 +1,7 @@
 name = "sol_reviewer"
 description = "High-reasoning reviewer for consequential changes, integration validation, regressions, concurrency, state consistency, security, and subtle correctness issues."
 model = "gpt-6-sol"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 
 developer_instructions = """

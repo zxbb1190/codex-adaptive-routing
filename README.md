@@ -3,16 +3,17 @@
 Reusable project-scoped Codex configuration for adaptive multi-agent software
 development.
 
-The root agent uses GPT-6 Sol high as the coordinator and decides whether a task is
-better handled directly or delegated. The configuration provides specialized
-roles for low-cost exploration, routine implementation, complex implementation,
-review, architecture planning, and last-resort arbitration.
+The root agent uses GPT-6 Sol xhigh as the coordinator and decides whether a task
+is better handled directly or delegated. This quality-first configuration favors
+strong routing judgement, first-pass quality, and thorough selective review.
+It provides specialized roles for discovery, ordinary implementation, complex
+implementation, review, architecture planning, and last-resort arbitration.
 
 ## Contents
 
 - `.codex/config.toml`: project defaults and a concurrency ceiling of 3.
 - `.codex/agents/`: six custom roles with explicit model and reasoning settings.
-- `AGENTS.md`: model-independent routing and delegation policy.
+- `AGENTS.md`: routing, delegation, and escalation policy.
 
 ## Use In A Project
 
@@ -32,51 +33,47 @@ overwriting project-specific instructions.
 ## Design
 
 The role files are a resource pool, not a mandatory workflow. The root agent may
-delegate when the expected quality, context, or latency benefit exceeds the
-token and coordination cost. Small tasks can remain single-agent. Model
+delegate when quality, context isolation, parallelism, risk, or elapsed time
+justify it. Short or tightly coupled tasks can remain single-agent. The goal is
+stronger results with fewer retries, not minimum token consumption. Model
 capability and reasoning effort are selected independently.
 
 The default configuration uses the following model family:
 
 | Role | Model | Reasoning |
 | --- | --- | --- |
-| Root coordinator | `gpt-6-sol` | `high` |
+| Root coordinator | `gpt-6-sol` | `xhigh` |
 | `luna_scanner` (read-only discovery) | `gpt-6-luna` | `low` |
-| `luna_worker` (default implementation) | `gpt-6-luna` | `medium` |
-| `sol_worker` (complex implementation) | `gpt-6-sol` | `medium` |
-| `sol_reviewer` (read-only review) | `gpt-6-sol` | `high` |
+| `luna_worker` (default implementation) | `gpt-6-luna` | `high` |
+| `sol_worker` (complex implementation) | `gpt-6-sol` | `high` |
+| `sol_reviewer` (read-only review) | `gpt-6-sol` | `xhigh` |
 | `astra_architect` (read-only planning) | `gpt-6-astra` | `medium` |
 | `astra_arbiter` (read-only arbitration) | `gpt-6-astra` | `high` |
 
 These are three models and six subagent roles, plus the root coordinator.
-Unnamed subagents default to GPT-6 Luna medium. Luna handles bounded ordinary
+Unnamed subagents default to GPT-6 Luna high. Luna handles bounded ordinary
 features, UI, API integration, CRUD, tests, and small refactors. Sol handles
 complex state, concurrency, performance, migrations, and difficult debugging.
 The root may route directly to the appropriate specialist; Luna -> Sol -> Astra
 is not a required sequence. Review and architecture work are used selectively.
 
-Luna is the low-cost execution layer. Sol handles everyday coordination and
-complex coding. Astra is reserved for genuine architecture decisions and
-last-resort arbitration; it is not a routine stage of each task. This routing
-is intended to concentrate execution on Luna and Sol; actual token savings
-depend on the workload and should be measured rather than assumed.
+Luna handles bounded and ordinary execution. Sol handles primary coding,
+reasoning, and coordination. Astra is reserved for genuine architecture
+decisions and last-resort arbitration. Review is selective, not a required
+step after every worker task; ordinary CSS, copy, and simple CRUD usually need
+only proportionate validation. The concurrency limit of 3 is a ceiling.
 
 The model family is described in the [official model guidance](https://developers.openai.com/api/docs/guides/latest-model).
 The role boundaries and concurrency ceiling here are project policy.
 
 Verify that these model IDs are available to your Codex account before use.
 
-## Upgrade From The Previous Configuration
-
-The root changes from Astra low to Sol high, and both the default subagent and
-`luna_worker` change from Luna high to Luna medium. The other five roles and
-the concurrency ceiling of 3 remain unchanged.
+## Apply To An Existing Project
 
 Replace the routing template files and merge `AGENTS.md` with your project's
-engineering rules. Remove the old `.codex/agents/terra-worker.toml` from the
-target project: copying new files alone does not remove it. Update project-local
-references to `terra_worker` or `ESCALATE_TERRA` to the new Luna implementation
-role or Sol escalation, as appropriate.
+engineering rules. Remove obsolete role files from the target project: copying
+new files alone does not remove files that were previously installed. Check
+project-local escalation references against the six current role names.
 
 Start a new Codex task after upgrading so it can load the new project settings
 and role definitions. Existing tasks may retain their loaded configuration.

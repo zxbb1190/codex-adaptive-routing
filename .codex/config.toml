@@ -1,10 +1,10 @@
 # Project-scoped Codex defaults. Codex loads this file only for trusted projects.
 model = "gpt-6-sol"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 
 [agents]
 enabled = true
 default_subagent_model = "gpt-6-luna"
-default_subagent_reasoning_effort = "medium"
+default_subagent_reasoning_effort = "high"
 max_concurrent_threads_per_session = 3
 interrupt_message = true
