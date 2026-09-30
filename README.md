@@ -3,7 +3,7 @@
 Reusable project-scoped Codex configuration for adaptive multi-agent software
 development.
 
-The root agent uses GPT-6 Sol xhigh as the coordinator and decides whether a task
+The root agent uses GPT-6.1 Sol xhigh as the coordinator and decides whether a task
 is better handled directly or delegated. This quality-first configuration favors
 strong routing judgement, first-pass quality, and thorough selective review.
 It provides specialized roles for discovery, ordinary implementation, complex
@@ -42,7 +42,7 @@ The default configuration uses the following model family:
 
 | Role | Model | Reasoning |
 | --- | --- | --- |
-| Root coordinator | `gpt-6-sol` | `xhigh` |
+| Root coordinator | `gpt-6.1-sol` | `xhigh` |
 | `luna_scanner` (read-only discovery) | `gpt-6-luna` | `low` |
 | `luna_worker` (default implementation) | `gpt-6-luna` | `high` |
 | `sol_worker` (complex implementation) | `gpt-6-sol` | `high` |
@@ -51,7 +51,8 @@ The default configuration uses the following model family:
 | `astra_architect` (read-only design) | `gpt-6-astra` | `medium` |
 | `astra_arbiter` (read-only arbitration) | `gpt-6-astra` | `high` |
 
-These are three models and seven subagent roles, plus the root coordinator.
+These are four model IDs across the Luna, Sol, and Astra families, with seven
+subagent roles plus the root coordinator.
 Unnamed subagents default to GPT-6 Luna high. Luna handles bounded ordinary
 features, UI, API integration, CRUD, tests, and small refactors. Sol handles
 complex state, concurrency, performance, migrations, and difficult debugging.

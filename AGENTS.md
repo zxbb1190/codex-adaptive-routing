@@ -2,7 +2,7 @@
 
 ## Coordinator
 
-The GPT-6 Sol xhigh root owns requirements, routing, integration, validation,
+The GPT-6.1 Sol xhigh root owns requirements, routing, integration, validation,
 and the final result. It may proactively delegate when quality, context
 isolation, risk, or elapsed time justify coordination overhead. No user request
 to name a subagent is required. Complete trivial or tightly coupled work
